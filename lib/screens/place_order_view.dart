@@ -91,150 +91,154 @@ class _PlaceOrderViewState extends State<PlaceOrderView> {
     return Scaffold(
       appBar: CustomAppbar(isBlackk: false),
 
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Header(title: "Checkout"),
-              _savedCard != null && _savedAddress != null
-                  ? SizedBox.shrink()
-                  : CustomText(
-                    text: "Shipping address".toUpperCase(),
-                    color: Colors.black38,
-                    max: 2,
-                    size: 16,
-                  ),
-              Gap(13),
-
-              /// address Info
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    _savedAddress != null
-                        ? AddressInfo(
-                          savedAddress: _savedAddress,
-                          onTap: _editAddress,
-                        )
-                        : SizedBox.shrink(),
-                    Gap(20),
-                    _savedAddress == null
-                        ? GestureDetector(
-                          onTap: () {
-                            _openAddress(context);
-                          },
-                          child: customContainer(
-                            "Add shipping address",
-                            Icons.add,
-                            false,
-                          ),
-                        )
-                        : SizedBox.shrink(),
-                  ],
-                ),
-              ),
-              Gap(10),
-
-              /// Shipping Method
-              _savedCard != null && _savedAddress != null
-                  ? SizedBox.shrink()
-                  : ShippingMethod(),
-
-              /// payment Method
-              _savedCard != null && _savedAddress != null
-                  ? SizedBox.shrink()
-                  : CustomText(
-                    text: "Payment Method".toUpperCase(),
-                    color: Colors.black38,
-                    size: 16,
-                  ),
-
-              Gap(20),
-              _savedCard != null
-                  ? Column(
-                    children: [
-                      Divider(color: Colors.grey.shade300),
-                      Gap(20),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            "assets/svgs/Mastercard.svg",
-                            width: 40,
-                          ),
-                          Gap(10),
-                          CustomText(
-                            text: "Master Card ending",
-                            color: Colors.black,
-                          ),
-                          Gap(10),
-                          CustomText(
-                            text:
-                                "••••${_savedCard['number'].toString().substring(_savedCard['number'].length - 2)}",
-                            color: Colors.black,
-                          ),
-                          Spacer(),
-                          SvgPicture.asset("assets/svgs/arrow.svg"),
-                        ],
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Header(title: "Checkout"),
+                  _savedCard != null && _savedAddress != null
+                      ? SizedBox.shrink()
+                      : CustomText(
+                        text: "Shipping address".toUpperCase(),
+                        color: Colors.black38,
+                        max: 2,
+                        size: 16,
                       ),
-                      Gap(20),
-                      Divider(color: Colors.grey.shade300),
-                    ],
-                  )
-                  : GestureDetector(
-                    onTap: _openCard,
-                    child: customContainer(
-                      "Select Payment Method",
-                      Icons.keyboard_arrow_down_sharp,
-                      false,
+                  Gap(13),
+
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        _savedAddress != null
+                            ? AddressInfo(
+                              savedAddress: _savedAddress,
+                              onTap: _editAddress,
+                            )
+                            : SizedBox.shrink(),
+                        Gap(20),
+                        _savedAddress == null
+                            ? GestureDetector(
+                              onTap: () {
+                                _openAddress(context);
+                              },
+                              child: customContainer(
+                                "Add shipping address",
+                                Icons.add,
+                                false,
+                              ),
+                            )
+                            : SizedBox.shrink(),
+                      ],
                     ),
                   ),
+                  Gap(10),
 
-              Gap(20),
+                  /// Shipping Method
+                  _savedCard != null && _savedAddress != null
+                      ? SizedBox.shrink()
+                      : ShippingMethod(),
 
-              _savedCard != null && _savedAddress != null
-                  ? CartWidget(
-                    image: widget.image,
-                    name: widget.name,
-                    descp: widget.desp,
-                    price: widget.price,
-                    qty: widget.qty,
-                    onChanged: (qty) => setState(() => selectedQty = qty),
-                  )
-                  : SizedBox.shrink(),
+                  /// payment Method
+                  _savedCard != null && _savedAddress != null
+                      ? SizedBox.shrink()
+                      : CustomText(
+                        text: "Payment Method".toUpperCase(),
+                        color: Colors.black38,
+                        size: 16,
+                      ),
 
-              Gap(80),
+                  Gap(20),
+                  _savedCard != null
+                      ? Column(
+                        children: [
+                          Divider(color: Colors.grey.shade300),
+                          Gap(20),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                "assets/svgs/Mastercard.svg",
+                                width: 40,
+                              ),
+                              Gap(10),
+                              CustomText(
+                                text: "Master Card ending",
+                                color: Colors.black,
+                              ),
+                              Gap(10),
+                              CustomText(
+                                text:
+                                    "••••${_savedCard['number'].toString().substring(_savedCard['number'].length - 2)}",
+                                color: Colors.black,
+                              ),
+                              Spacer(),
+                              SvgPicture.asset("assets/svgs/arrow.svg"),
+                            ],
+                          ),
+                          Gap(20),
+                          Divider(color: Colors.grey.shade300),
+                        ],
+                      )
+                      : GestureDetector(
+                        onTap: _openCard,
+                        child: customContainer(
+                          "Select Payment Method",
+                          Icons.keyboard_arrow_down_sharp,
+                          false,
+                        ),
+                      ),
 
-              /// Ending
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(text: "Total", color: AppColors.primary),
-                  CustomText(
-                    text: "\$ ${widget.price * selectedQty}",
-                    color: Colors.red.shade200,
-                  ),
+                  Gap(20),
+
+                  _savedCard != null && _savedAddress != null
+                      ? CartWidget(
+                        image: widget.image,
+                        name: widget.name,
+                        descp: widget.desp,
+                        price: widget.price,
+                        qty: widget.qty,
+                        onChanged: (qty) => setState(() => selectedQty = qty),
+                      )
+                      : SizedBox.shrink(),
                 ],
               ),
-              Gap(20),
-              Button(
-                isSvgg: true,
-                title: "Place order",
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) {
-                      return Dialog(child: CustomDailog());
-                    },
-                  );
-                },
-              ),
-              Gap(70),
-            ],
+            ),
           ),
-        ),
+          Spacer(),
+
+          /// Ending
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomText(text: "Total", color: AppColors.primary),
+                CustomText(
+                  text: "\$ ${widget.price * selectedQty}",
+                  color: Colors.red.shade200,
+                ),
+              ],
+            ),
+          ),
+          Gap(20),
+          Button(
+            isSvgg: true,
+            title: "Place order",
+            onTap: () {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return Dialog(child: CustomDailog());
+                },
+              );
+            },
+          ),
+        ],
       ),
     );
   }

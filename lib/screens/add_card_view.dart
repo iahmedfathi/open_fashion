@@ -120,7 +120,7 @@ class _AddCardViewState extends State<AddCardView> {
                     }
                   },
                 ),
-                Gap(70),
+          
               ],
             ),
           ),

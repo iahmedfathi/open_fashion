@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:open_fashion/components/custom_appbar.dart';
+import 'package:open_fashion/components/custom_text.dart';
 import 'package:open_fashion/components/header.dart';
 import '../components/custom_button.dart';
 import '../components/custom_text_field.dart';
@@ -55,76 +56,89 @@ class _AddAddressViewState extends State<AddAddressView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppbar(isBlackk: false),
-
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
-            Header(title: "Add shipping address"),
-
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomTextField(
-                          label: 'First name',
-                          controller: firstNameController,
-                        ),
+            Expanded(
+              // 👈 هذا مهم
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Header(title: "Add shipping address"),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  label: 'First name',
+                                  controller: firstNameController,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: CustomTextField(
+                                  label: 'Last name',
+                                  controller: lastNameController,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Gap(30),
+                          CustomTextField(
+                            label: 'Address',
+                            controller: addressController,
+                          ),
+                          Gap(30),
+                          CustomTextField(
+                            label: 'City',
+                            controller: cityController,
+                          ),
+                          Gap(30),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  label: 'State',
+                                  controller: stateController,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: CustomTextField(
+                                  label: 'ZIP Code',
+                                  controller: zipCodeController,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Gap(30),
+                          CustomTextField(
+                            label: 'Phone Number',
+                            controller: phoneController,
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: CustomTextField(
-                          label: 'Last name',
-                          controller: lastNameController,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Gap(30),
-                  CustomTextField(
-                    label: 'Address',
-                    controller: addressController,
-                  ),
-                  Gap(30),
-                  CustomTextField(label: 'City', controller: cityController),
-                  Gap(30),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomTextField(
-                          label: 'State',
-                          controller: stateController,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: CustomTextField(
-                          label: 'ZIP Code',
-                          controller: zipCodeController,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Gap(30),
-                  CustomTextField(
-                    label: 'Phone Number',
-                    controller: phoneController,
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
 
-            Spacer(),
+            // استخدم SizedBox بدلاً من Spacer
+            const SizedBox(height: 20),
 
             Button(
               isSvgg: true,
               title: "Place order",
               onTap: () {
                 if (_formKey.currentState!.validate()) {
-                  return;
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: CustomText(text: 'error')));
                 } else {
                   final data = {
                     'first': firstNameController.text,
@@ -138,8 +152,7 @@ class _AddAddressViewState extends State<AddAddressView> {
                 }
               },
             ),
-
-            Gap(70),
+            const SizedBox(height: 20),
           ],
         ),
       ),

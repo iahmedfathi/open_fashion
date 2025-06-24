@@ -3,11 +3,11 @@ import 'package:gap/gap.dart';
 import 'package:open_fashion/components/cart_widget.dart';
 import 'package:open_fashion/components/custom_appbar.dart';
 import 'package:open_fashion/components/custom_button.dart';
-import 'package:open_fashion/components/custom_text.dart';
+
 import 'package:open_fashion/components/promo.dart';
 import 'package:open_fashion/components/header.dart';
 import 'package:open_fashion/components/total_widget.dart';
-import 'package:open_fashion/core/colors.dart';
+
 import 'package:open_fashion/screens/place_order_view.dart';
 
 class CheckoutView extends StatefulWidget {
